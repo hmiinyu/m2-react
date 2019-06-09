@@ -18,9 +18,9 @@ var serviceWorker = _interopRequireWildcard(require("./service-worker"));
 
 var _m2Core = require("m2-core");
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
@@ -35,7 +35,7 @@ function render(rootApp) {
   } // 注入string.format
 
 
-  _stringFormat.default && _stringFormat.default.extend(String.prototype, {});
+  _stringFormat["default"] && _stringFormat["default"].extend(String.prototype, {});
   var _app_root = rootApp;
 
   if (rootApp.components && !_m2Core.DataType.isEmptyArray(rootApp.components)) {
@@ -54,7 +54,7 @@ function render(rootApp) {
   }, options);
 
   var _renderApp = function _renderApp(app) {
-    (0, _reactDom.render)(_opts.hot ? _react.default.createElement(_reactHotLoader.AppContainer, null, _react.default.createElement(_react.default.Fragment, null, app)) : app, document.getElementById(rootApp.root || 'root'));
+    (0, _reactDom.render)(_opts.hot ? _react["default"].createElement(_reactHotLoader.AppContainer, null, _react["default"].createElement(_react["default"].Fragment, null, app)) : app, document.getElementById(rootApp.root || 'root'));
   };
 
   _renderApp(_app_root);

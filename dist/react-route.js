@@ -3,13 +3,15 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.renderRoutes = exports.loadRoutesConfig = void 0;
+exports.getParam = exports.getRouteQueryParam = exports.getRouteParam = exports.renderRoutes = exports.loadRoutesConfig = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
 var _reactRouterDom = require("react-router-dom");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _m2Core = require("m2-core");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
@@ -75,15 +77,15 @@ var renderRoutes = function renderRoutes(routesConfig, contextPath) {
 
     if (item.component && item.children) {
       var childRoutes = renderRoutes(item.children, newContextPath);
-      children.push(_react.default.createElement(_reactRouterDom.Route, {
+      children.push(_react["default"].createElement(_reactRouterDom.Route, {
         key: newContextPath,
         render: function render(props) {
-          return _react.default.createElement(item.component, props, childRoutes);
+          return _react["default"].createElement(item.component, props, childRoutes);
         },
         path: newContextPath
       }));
     } else if (item.component) {
-      children.push(_react.default.createElement(_reactRouterDom.Route, {
+      children.push(_react["default"].createElement(_reactRouterDom.Route, {
         key: newContextPath,
         component: item.component,
         path: newContextPath,
@@ -100,7 +102,34 @@ var renderRoutes = function renderRoutes(routesConfig, contextPath) {
     return renderRouteItem(item, contextPath);
   }); // Use Switch so that only the first matched route is rendered.
 
-  return routeType === 'hash' ? _react.default.createElement(_reactRouterDom.HashRouter, null, _react.default.createElement(_reactRouterDom.Switch, null, children)) : _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement(_reactRouterDom.Switch, null, children));
+  return routeType === 'hash' ? _react["default"].createElement(_reactRouterDom.HashRouter, null, _react["default"].createElement(_reactRouterDom.Switch, null, children)) : _react["default"].createElement(_reactRouterDom.BrowserRouter, null, _react["default"].createElement(_reactRouterDom.Switch, null, children));
 };
 
 exports.renderRoutes = renderRoutes;
+
+var getRouteParam = function getRouteParam(name, props) {
+  if (name && props && props.match) {
+    return props.match.params[name];
+  }
+
+  return '';
+};
+
+exports.getRouteParam = getRouteParam;
+
+var getRouteQueryParam = function getRouteQueryParam(name, props) {
+  if (name && props && props.location) {
+    return _m2Core.UrlUtil.getQueryValue(name, props.location.search);
+  }
+
+  return '';
+};
+
+exports.getRouteQueryParam = getRouteQueryParam;
+
+var getParam = function getParam(name, props) {
+  var query = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  return query ? getRouteQueryParam(name, props) : getRouteParam(name, props);
+};
+
+exports.getParam = getParam;

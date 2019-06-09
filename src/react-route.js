@@ -1,5 +1,6 @@
 import React from 'react'; // eslint-disable-line
 import { HashRouter, BrowserRouter, Route, Switch } from 'react-router-dom';
+import { UrlUtil } from 'm2-core';
 
 export const loadRoutesConfig = (rootApp, childRoutes) => {
   if (!rootApp && !rootApp.components) {
@@ -70,4 +71,22 @@ export const renderRoutes = (routesConfig, contextPath, routeType = 'hash') => {
       <Switch>{children}</Switch>
     </BrowserRouter>
   );
+};
+
+export const getRouteParam = (name, props) => {
+  if (name && props && props.match) {
+    return props.match.params[name];
+  }
+  return '';
+};
+
+export const getRouteQueryParam = (name, props) => {
+  if (name && props && props.location) {
+    return UrlUtil.getQueryValue(name, props.location.search);
+  }
+  return '';
+};
+
+export const getParam = (name, props, query = false) => {
+  return query ? getRouteQueryParam(name, props) : getRouteParam(name, props);
 };

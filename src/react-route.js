@@ -1,18 +1,18 @@
 import React from 'react'; // eslint-disable-line
 import { HashRouter, BrowserRouter, Route, Switch } from 'react-router-dom';
-import { UrlUtil } from 'm2-core';
+import { DataType, UrlUtil } from 'm2-core';
 
-export const loadRoutesConfig = (rootApp, childRoutes) => {
-  if (!rootApp && !rootApp.components) {
-    console.error('React根组件参数components尚未配置, 应用无法启动！');
+export const loadRoutesConfig = (rootApp, childRoutes, context = '/') => {
+  if (!rootApp) {
+    console.error('React根组件参数rootApp尚未配置, 应用无法启动！');
     return;
   }
 
   const routes = [{
-    path: '/',
-    component: rootApp.components || rootApp,
+    path: context,
+    component: rootApp,
     children: childRoutes
-  }].filter(item => item.components || (item.children && item.children.length > 0));
+  }].filter(item => item.children && item.children.length > 0);
 
   const handleDefaultRoute = (route) => {
     const childRoutes = route.children;
@@ -31,6 +31,34 @@ export const loadRoutesConfig = (rootApp, childRoutes) => {
 
   routes.forEach(handleDefaultRoute);
 
+  return routes;
+};
+
+export const loadLayoutRoutesConfig = (layouts, childRoutes) => {
+  if (DataType.isEmptyArray(layouts)) {
+    console.error('React布局参数layouts尚未配置, 应用无法启动！');
+    return;
+  }
+  // 根据布局对路由配置进行分类
+  let routes = [];
+  const _filterRoutes = (routes, layout) => {
+    const result = [];
+    routes.forEach(route => {
+      const _routes = DataType.isArray(route) ? route : [route];
+      const _item = _routes.find(item => item.layout === layout.name || (layout.default && !item.layout));
+      if (_item) {
+        result.push(_item);
+      }
+    });
+    return result;
+  };
+  const _getRoutePrefix = (layout) => {
+    if (layout.prefix) return layout.prefix;
+    return layout.default ? '/' : '/' + layout.name;
+  };
+  layouts.forEach(item => {
+    routes = [...routes, ...loadRoutesConfig(item.layout, _filterRoutes(childRoutes, item), _getRoutePrefix(item))]
+  });
   return routes;
 };
 

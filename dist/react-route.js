@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getParam = exports.getRouteQueryParam = exports.getRouteParam = exports.renderRoutes = exports.loadRoutesConfig = void 0;
+exports.getParam = exports.getRouteQueryParam = exports.getRouteParam = exports.renderRoutes = exports.loadLayoutRoutesConfig = exports.loadRoutesConfig = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -13,22 +13,32 @@ var _m2Core = require("m2-core");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var loadRoutesConfig = function loadRoutesConfig(rootApp, childRoutes) {
-  if (!rootApp && !rootApp.components) {
-    console.error('React根组件参数components尚未配置, 应用无法启动！');
+  var context = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '/';
+
+  if (!rootApp) {
+    console.error('React根组件参数rootApp尚未配置, 应用无法启动！');
     return;
   }
 
   var routes = [{
-    path: '/',
-    component: rootApp.components || rootApp,
+    path: context,
+    component: rootApp,
     children: childRoutes
   }].filter(function (item) {
-    return item.components || item.children && item.children.length > 0;
+    return item.children && item.children.length > 0;
   });
 
   var handleDefaultRoute = function handleDefaultRoute(route) {
@@ -58,6 +68,44 @@ var loadRoutesConfig = function loadRoutesConfig(rootApp, childRoutes) {
 };
 
 exports.loadRoutesConfig = loadRoutesConfig;
+
+var loadLayoutRoutesConfig = function loadLayoutRoutesConfig(layouts, childRoutes) {
+  if (_m2Core.DataType.isEmptyArray(layouts)) {
+    console.error('React布局参数layouts尚未配置, 应用无法启动！');
+    return;
+  } // 根据布局对路由配置进行分类
+
+
+  var routes = [];
+
+  var _filterRoutes = function _filterRoutes(routes, layout) {
+    var result = [];
+    routes.forEach(function (route) {
+      var _routes = _m2Core.DataType.isArray(route) ? route : [route];
+
+      var _item = _routes.find(function (item) {
+        return item.layout === layout.name || layout["default"] && !item.layout;
+      });
+
+      if (_item) {
+        result.push(_item);
+      }
+    });
+    return result;
+  };
+
+  var _getRoutePrefix = function _getRoutePrefix(layout) {
+    if (layout.prefix) return layout.prefix;
+    return layout["default"] ? '/' : '/' + layout.name;
+  };
+
+  layouts.forEach(function (item) {
+    routes = [].concat(_toConsumableArray(routes), _toConsumableArray(loadRoutesConfig(item.layout, _filterRoutes(childRoutes, item), _getRoutePrefix(item))));
+  });
+  return routes;
+};
+
+exports.loadLayoutRoutesConfig = loadLayoutRoutesConfig;
 
 var renderRoutes = function renderRoutes(routesConfig, contextPath) {
   var routeType = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'hash';

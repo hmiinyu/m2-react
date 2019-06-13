@@ -17,7 +17,7 @@ export const loadRoutesConfig = (rootApp, childRoutes, context = '/') => {
   const handleDefaultRoute = (route) => {
     const childRoutes = route.children;
     if (!route.extra && childRoutes && childRoutes.length > 0) {
-      const defaultRoute = childRoutes.find(child => child.isDefault);
+      const defaultRoute = childRoutes.find(child => child.default || child.isDefault);
       if (defaultRoute) {
         const first = { ...defaultRoute };
         first.path = route.path;

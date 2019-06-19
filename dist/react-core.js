@@ -54,14 +54,14 @@ function render(rootApp) {
 /**
  * @method 获取组件的子组件的引用(包含refs, wrappedComponentRef)
  * @param {String} refKey 当前引用的子组件key(可能是ref值或form表单)
- * @param {Object} component 当前的父组件
+ * @param {Object} parent 当前的父组件
  * @returns {Object} 获取子组件的引用
  */
 
 
-var getComponentRef = function getComponentRef(refKey, component) {
-  if (!refKey || !component) return;
-  var ref = component[refKey] || component.refs[refKey];
+var getComponentRef = function getComponentRef(refKey, parent) {
+  if (!refKey || !parent) return;
+  var ref = parent[refKey] || parent.refs[refKey];
   if (!ref) return;
   return ref.getWrappedInstance ? ref.getWrappedInstance() : ref;
 };

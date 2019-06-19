@@ -1,6 +1,6 @@
 # m2-react
 
-[![](https://img.shields.io/badge/m2--react-v1.0.0-green.svg)](https://github.com/hmiinyu/m2-react.git) <br/>
+[![](m2-react.svg)](https://github.com/hmiinyu/m2-react.git) <br/>
 The package is provided facilities and utilities based on react.
 
 You can learning the M2 React & Redux architecture via visiting: 
@@ -134,9 +134,9 @@ const routes = loadLayoutRoutesConfig(layouts, [
 
 export default {
   routes,
-  routeType: 'hash',
-  redirectUrl: '/auth',
-  redirect404: '/404'
+  routeType: 'hash', // 路由类型('hash','browser')
+  redirectUrl: '/auth', // 用户未通过登录认证导航的页面(一般指向登录页面)
+  redirect404: '/404' // 当路由未找到匹配时导航的页面(一般指向404)
 }
 ```
  - `renderRoutes` **function** Render the Routes based on router configuration with the param *routesConfig*,*contextPath* and *configOptions*.

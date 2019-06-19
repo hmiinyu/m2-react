@@ -108,17 +108,17 @@ var loadLayoutRoutesConfig = function loadLayoutRoutesConfig(layouts, childRoute
 exports.loadLayoutRoutesConfig = loadLayoutRoutesConfig;
 
 var renderRoutes = function renderRoutes(routesConfig, contextPath) {
-  var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  var _config$routeType = config.routeType,
-      routeType = _config$routeType === void 0 ? 'hash' : _config$routeType,
-      _config$checkIsAuth = config.checkIsAuth,
-      checkIsAuth = _config$checkIsAuth === void 0 ? function () {
+  var configOptions = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  var _configOptions$routeT = configOptions.routeType,
+      routeType = _configOptions$routeT === void 0 ? 'hash' : _configOptions$routeT,
+      _configOptions$checkI = configOptions.checkIsAuth,
+      checkIsAuth = _configOptions$checkI === void 0 ? function () {
     return false;
-  } : _config$checkIsAuth,
-      _config$redirectUrl = config.redirectUrl,
-      redirectUrl = _config$redirectUrl === void 0 ? '' : _config$redirectUrl,
-      _config$redirect = config.redirect404,
-      redirect404 = _config$redirect === void 0 ? '' : _config$redirect; // Resolve route config object
+  } : _configOptions$checkI,
+      _configOptions$redire = configOptions.redirectUrl,
+      redirectUrl = _configOptions$redire === void 0 ? '' : _configOptions$redire,
+      _configOptions$redire2 = configOptions.redirect404,
+      redirect404 = _configOptions$redire2 === void 0 ? '' : _configOptions$redire2; // Resolve route config object
 
   var children = [];
 
@@ -149,7 +149,7 @@ var renderRoutes = function renderRoutes(routesConfig, contextPath) {
     newContextPath = newContextPath.replace(/\/+/g, '/');
 
     if (item.component && item.children) {
-      var childRoutes = renderRoutes(item.children, newContextPath, config);
+      var childRoutes = renderRoutes(item.children, newContextPath, configOptions);
       children.push(_react["default"].createElement(_reactRouterDom.Route, {
         key: newContextPath,
         render: function render(props) {

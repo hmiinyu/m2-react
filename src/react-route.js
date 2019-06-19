@@ -1,5 +1,5 @@
 import React from 'react'; // eslint-disable-line
-import { HashRouter, BrowserRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { DataType, UrlUtil } from 'm2-core';
 
 export const loadRoutesConfig = (rootApp, childRoutes, context = '/') => {
@@ -62,10 +62,26 @@ export const loadLayoutRoutesConfig = (layouts, childRoutes) => {
   return routes;
 };
 
-export const renderRoutes = (routesConfig, contextPath, routeType = 'hash') => {
+export const renderRoutes = (routesConfig, contextPath, configOptions = {}) => {
+  const {
+    routeType = 'hash', // 路由类型(hash|browser)
+    checkIsAuth = () => false, // 检查是否已通过认证
+    redirectUrl = '', // 未通过认证重定向到页面
+    redirect404 = '' // 路由未匹配到达的页面
+  } = configOptions;
+
   // Resolve route config object
   const children = [];
-  const renderRouteItem = (item, routeContextPath) => {
+  const renderRouteItem = (item, routeContextPath, main = false) => {
+    if (redirectUrl && !main) {
+      if (!item.public && !checkIsAuth()) {
+        item = {
+          ...item,
+          component: () => <Redirect to={redirectUrl}/>,
+          children: null
+        };
+      }
+    }
     let newContextPath;
     if (/^\//.test(item.path)) {
       newContextPath = item.path;
@@ -74,7 +90,7 @@ export const renderRoutes = (routesConfig, contextPath, routeType = 'hash') => {
     }
     newContextPath = newContextPath.replace(/\/+/g, '/');
     if (item.component && item.children) {
-      const childRoutes = renderRoutes(item.children, newContextPath);
+      const childRoutes = renderRoutes(item.children, newContextPath, configOptions);
       children.push(
         <Route
           key={newContextPath}
@@ -88,7 +104,11 @@ export const renderRoutes = (routesConfig, contextPath, routeType = 'hash') => {
       item.children.forEach(child => renderRouteItem(child, newContextPath));
     }
   };
-  routesConfig.forEach(item => renderRouteItem(item, contextPath));
+  routesConfig.forEach(item => renderRouteItem(item, contextPath, true));
+  // Add not matched page (404)
+  if (redirect404) {
+    children.push(<Route key='not-match' component={()=><Redirect to={redirect404}/>} />);
+  }
   // Use Switch so that only the first matched route is rendered.
   return routeType === 'hash' ? (
     <HashRouter>

@@ -46,7 +46,7 @@ var loadRoutesConfig = function loadRoutesConfig(rootApp, childRoutes) {
 
     if (!route.extra && childRoutes && childRoutes.length > 0) {
       var defaultRoute = childRoutes.find(function (child) {
-        return child.isDefault;
+        return child["default"] || child.isDefault;
       });
 
       if (defaultRoute) {
@@ -108,11 +108,36 @@ var loadLayoutRoutesConfig = function loadLayoutRoutesConfig(layouts, childRoute
 exports.loadLayoutRoutesConfig = loadLayoutRoutesConfig;
 
 var renderRoutes = function renderRoutes(routesConfig, contextPath) {
-  var routeType = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'hash';
-  // Resolve route config object
+  var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  var _config$routeType = config.routeType,
+      routeType = _config$routeType === void 0 ? 'hash' : _config$routeType,
+      _config$checkIsAuth = config.checkIsAuth,
+      checkIsAuth = _config$checkIsAuth === void 0 ? function () {
+    return false;
+  } : _config$checkIsAuth,
+      _config$redirectUrl = config.redirectUrl,
+      redirectUrl = _config$redirectUrl === void 0 ? '' : _config$redirectUrl,
+      _config$redirect = config.redirect404,
+      redirect404 = _config$redirect === void 0 ? '' : _config$redirect; // Resolve route config object
+
   var children = [];
 
   var renderRouteItem = function renderRouteItem(item, routeContextPath) {
+    var main = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+    if (redirectUrl && !main) {
+      if (!item["public"] && !checkIsAuth()) {
+        item = _objectSpread({}, item, {
+          component: function component() {
+            return _react["default"].createElement(_reactRouterDom.Redirect, {
+              to: redirectUrl
+            });
+          },
+          children: null
+        });
+      }
+    }
+
     var newContextPath;
 
     if (/^\//.test(item.path)) {
@@ -124,7 +149,7 @@ var renderRoutes = function renderRoutes(routesConfig, contextPath) {
     newContextPath = newContextPath.replace(/\/+/g, '/');
 
     if (item.component && item.children) {
-      var childRoutes = renderRoutes(item.children, newContextPath);
+      var childRoutes = renderRoutes(item.children, newContextPath, config);
       children.push(_react["default"].createElement(_reactRouterDom.Route, {
         key: newContextPath,
         render: function render(props) {
@@ -147,8 +172,20 @@ var renderRoutes = function renderRoutes(routesConfig, contextPath) {
   };
 
   routesConfig.forEach(function (item) {
-    return renderRouteItem(item, contextPath);
-  }); // Use Switch so that only the first matched route is rendered.
+    return renderRouteItem(item, contextPath, true);
+  }); // Add not matched page (404)
+
+  if (redirect404) {
+    children.push(_react["default"].createElement(_reactRouterDom.Route, {
+      key: "not-match",
+      component: function component() {
+        return _react["default"].createElement(_reactRouterDom.Redirect, {
+          to: redirect404
+        });
+      }
+    }));
+  } // Use Switch so that only the first matched route is rendered.
+
 
   return routeType === 'hash' ? _react["default"].createElement(_reactRouterDom.HashRouter, null, _react["default"].createElement(_reactRouterDom.Switch, null, children)) : _react["default"].createElement(_reactRouterDom.BrowserRouter, null, _react["default"].createElement(_reactRouterDom.Switch, null, children));
 };

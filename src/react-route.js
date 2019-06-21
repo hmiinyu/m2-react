@@ -1,4 +1,4 @@
-import React from 'react'; // eslint-disable-line
+import React from 'react';
 import { HashRouter, BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { DataType, UrlUtil } from 'm2-core';
 
@@ -107,7 +107,9 @@ export const renderRoutes = (routesConfig, contextPath, configOptions = {}) => {
   routesConfig.forEach(item => renderRouteItem(item, contextPath, true));
   // Add not matched page (404)
   if (redirect404) {
-    children.push(<Route key='not-match' component={()=><Redirect to={redirect404}/>} />);
+    if (checkIsAuth()) {
+      children.push(<Route key='/not-match' component={()=><Redirect to={redirect404}/>} />);
+    }
   }
   // Use Switch so that only the first matched route is rendered.
   return routeType === 'hash' ? (

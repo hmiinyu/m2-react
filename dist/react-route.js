@@ -176,14 +176,16 @@ var renderRoutes = function renderRoutes(routesConfig, contextPath) {
   }); // Add not matched page (404)
 
   if (redirect404) {
-    children.push(_react["default"].createElement(_reactRouterDom.Route, {
-      key: "not-match",
-      component: function component() {
-        return _react["default"].createElement(_reactRouterDom.Redirect, {
-          to: redirect404
-        });
-      }
-    }));
+    if (checkIsAuth()) {
+      children.push(_react["default"].createElement(_reactRouterDom.Route, {
+        key: "/not-match",
+        component: function component() {
+          return _react["default"].createElement(_reactRouterDom.Redirect, {
+            to: redirect404
+          });
+        }
+      }));
+    }
   } // Use Switch so that only the first matched route is rendered.
 
 

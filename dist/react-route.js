@@ -111,10 +111,8 @@ var renderRoutes = function renderRoutes(routesConfig, contextPath) {
   var configOptions = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
   var _configOptions$routeT = configOptions.routeType,
       routeType = _configOptions$routeT === void 0 ? 'hash' : _configOptions$routeT,
-      _configOptions$checkI = configOptions.checkIsAuth,
-      checkIsAuth = _configOptions$checkI === void 0 ? function () {
-    return false;
-  } : _configOptions$checkI,
+      _configOptions$authen = configOptions.authenticated,
+      authenticated = _configOptions$authen === void 0 ? false : _configOptions$authen,
       _configOptions$redire = configOptions.redirectUrl,
       redirectUrl = _configOptions$redire === void 0 ? '' : _configOptions$redire,
       _configOptions$redire2 = configOptions.redirect404,
@@ -126,7 +124,7 @@ var renderRoutes = function renderRoutes(routesConfig, contextPath) {
     var main = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
     if (redirectUrl && !main) {
-      if (!item["public"] && !checkIsAuth()) {
+      if (!item["public"] && !authenticated) {
         item = _objectSpread({}, item, {
           component: function component() {
             return _react["default"].createElement(_reactRouterDom.Redirect, {
@@ -176,7 +174,7 @@ var renderRoutes = function renderRoutes(routesConfig, contextPath) {
   }); // Add not matched page (404)
 
   if (redirect404) {
-    if (checkIsAuth()) {
+    if (authenticated) {
       children.push(_react["default"].createElement(_reactRouterDom.Route, {
         key: "/not-match",
         component: function component() {

@@ -65,7 +65,7 @@ export const loadLayoutRoutesConfig = (layouts, childRoutes) => {
 export const renderRoutes = (routesConfig, contextPath, configOptions = {}) => {
   const {
     routeType = 'hash', // 路由类型(hash|browser)
-    checkIsAuth = () => false, // 检查是否已通过认证
+    authenticated = false, // 检查是否已通过认证
     redirectUrl = '', // 未通过认证重定向到页面
     redirect404 = '' // 路由未匹配到达的页面
   } = configOptions;
@@ -74,7 +74,7 @@ export const renderRoutes = (routesConfig, contextPath, configOptions = {}) => {
   const children = [];
   const renderRouteItem = (item, routeContextPath, main = false) => {
     if (redirectUrl && !main) {
-      if (!item.public && !checkIsAuth()) {
+      if (!item.public && !authenticated) {
         item = {
           ...item,
           component: () => <Redirect to={redirectUrl}/>,
@@ -107,7 +107,7 @@ export const renderRoutes = (routesConfig, contextPath, configOptions = {}) => {
   routesConfig.forEach(item => renderRouteItem(item, contextPath, true));
   // Add not matched page (404)
   if (redirect404) {
-    if (checkIsAuth()) {
+    if (authenticated) {
       children.push(<Route key='/not-match' component={()=><Redirect to={redirect404}/>} />);
     }
   }

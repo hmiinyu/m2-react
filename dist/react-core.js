@@ -6,21 +6,20 @@ Object.defineProperty(exports, "__esModule", {
 exports.render = render;
 exports.getComponentRef = void 0;
 
-var _react = _interopRequireDefault(require("react"));
+var _root2 = require("react-hot-loader/root");
 
 var _reactDom = require("react-dom");
 
 var _stringFormat = _interopRequireDefault(require("string-format"));
 
-var serviceWorker = _interopRequireWildcard(require("./service-worker"));
-
 var _m2Core = require("m2-core");
+
+var serviceWorker = _interopRequireWildcard(require("./service-worker"));
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-// eslint-disable-line
 function render(rootApp) {
   if (!rootApp && !rootApp.component && !rootApp.components) {
     console.error('React根组件参数component(s)尚未配置, 应用无法启动！');
@@ -44,7 +43,7 @@ function render(rootApp) {
     (0, _reactDom.render)(app, document.getElementById(rootApp.root || 'root'));
   };
 
-  _renderApp(_app_root); // If you want your app to work offline and load faster, you can change
+  _renderApp((0, _root2.hot)(_app_root)); // If you want your app to work offline and load faster, you can change
   // unregister() to register() below. Note this comes with some pitfalls.
   // Learn more about service workers: http://bit.ly/CRA-PWA
 

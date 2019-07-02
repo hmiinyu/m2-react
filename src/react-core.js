@@ -1,4 +1,4 @@
-import { hot } from 'react-hot-loader/root';
+import React from 'react';
 import { render as _render } from 'react-dom';
 import format from 'string-format';
 import { DataType } from 'm2-core';
@@ -27,7 +27,7 @@ export function render(rootApp) {
     )
   };
 
-  _renderApp(hot(_app_root));
+  _renderApp(_app_root);
 
   // If you want your app to work offline and load faster, you can change
   // unregister() to register() below. Note this comes with some pitfalls.

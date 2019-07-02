@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.render = render;
 exports.getComponentRef = void 0;
 
-var _root2 = require("react-hot-loader/root");
+var _react = _interopRequireDefault(require("react"));
 
 var _reactDom = require("react-dom");
 
@@ -43,7 +43,7 @@ function render(rootApp) {
     (0, _reactDom.render)(app, document.getElementById(rootApp.root || 'root'));
   };
 
-  _renderApp((0, _root2.hot)(_app_root)); // If you want your app to work offline and load faster, you can change
+  _renderApp(_app_root); // If you want your app to work offline and load faster, you can change
   // unregister() to register() below. Note this comes with some pitfalls.
   // Learn more about service workers: http://bit.ly/CRA-PWA
 

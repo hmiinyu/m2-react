@@ -1,6 +1,6 @@
 # m2-react
 
-[![](https://img.shields.io/badge/m2--react-v1.1.1-green.svg)](https://github.com/hmiinyu/m2-react.git) <br/>
+[![](https://img.shields.io/badge/m2--react-v1.1.3-green.svg)](https://github.com/hmiinyu/m2-react.git) <br/>
 The package is provided facilities and utilities based on react.
 
 You can learning the M2 React & Redux architecture via visiting: 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { render as _render } from 'react-dom';
+import { AppContainer } from 'react-hot-loader'; // eslint-disable-line
 import format from 'string-format';
 import { DataType } from 'm2-core';
 import * as serviceWorker from './service-worker';
@@ -22,14 +23,22 @@ export function render(rootApp) {
 
   const _renderApp = (app) => {
     _render(
-      app,
+      <AppContainer>
+        {app}
+      </AppContainer>,
       document.getElementById(rootApp.root || 'root')
     )
   };
 
   _renderApp(_app_root);
 
-  // If you want your app to work offline and load faster, you can change
+  if (module.hot) {
+    module.hot.accept(() => {
+      _renderApp(_app_root);
+    });
+  }
+
+    // If you want your app to work offline and load faster, you can change
   // unregister() to register() below. Note this comes with some pitfalls.
   // Learn more about service workers: http://bit.ly/CRA-PWA
   serviceWorker.unregister();
@@ -46,4 +55,14 @@ export const getComponentRef = (refKey, parent) => {
   const ref = parent[refKey] || parent.refs[refKey];
   if (!ref) return;
   return ref.getWrappedInstance ? ref.getWrappedInstance() : ref;
+};
+/**
+ * @method 基于rc-form初始化组件(扩展生成setFieldValue方法)
+ * @param {Object} component 当前表单组件
+ */
+export const initialFormComponent = (component) => {
+  const { getFieldsValue } = component.props.form;
+  component.form = { ...component.props.form, setFieldValue: (field, val) => {
+      component.form.values = { ...getFieldsValue(), [field]: val }
+  }};
 };

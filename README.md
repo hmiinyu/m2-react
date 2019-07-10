@@ -81,6 +81,37 @@ export default class MyComponent extends React.Component {
   }
 }
 ```
+ - `initialFormComponent` **function** Initial the form component for extended on rc-form with the param *component*.
+ ####
+ | param | type | description | default | example |
+ | ------------ | ------------ | ------------ | ------------ | ------------ |
+ | component | object | current react component |  | 'initialFormComponent(this)' |
+```js
+import React from 'react'
+import { createForm } from 'rc-form'
+import { PickerItem } from 'm2-antd/mobile' /* 待发布(可用其他空间代替) */
+import { initialFormComponent } from 'm2-react'
+
+export class App extends React.Component {
+  componentWillMount() {
+    initialFormComponent(this)
+  }  
+  
+  handleSubmit() {
+    console.log(this.form.values)
+  }
+  
+  render() {
+    return (
+      <div className="App">
+        <PickerItem label="选择地区" data={district} field="district" {...this.form}/>
+        <Button onClick={()=>this.submit()}>提交</Button>
+      </div>
+    );
+  }
+}
+export default createForm()(App);
+```
  - `loadRoutesConfig` **function** Load the application router configuration with the param *rootApp*,*childRoutes* and *context*.
  ####
  | param | type | description | default | example |

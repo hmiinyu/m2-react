@@ -116,3 +116,23 @@ function unregister() {
     });
   }
 }
+
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(isLocalhost, "isLocalhost", "/Users/miracle/Desktop/DevOps/M2.FTX/m2/m2-react/src/service-worker.js");
+
+  __REACT_HOT_LOADER__.register(register, "register", "/Users/miracle/Desktop/DevOps/M2.FTX/m2/m2-react/src/service-worker.js");
+
+  __REACT_HOT_LOADER__.register(registerValidSW, "registerValidSW", "/Users/miracle/Desktop/DevOps/M2.FTX/m2/m2-react/src/service-worker.js");
+
+  __REACT_HOT_LOADER__.register(checkValidServiceWorker, "checkValidServiceWorker", "/Users/miracle/Desktop/DevOps/M2.FTX/m2/m2-react/src/service-worker.js");
+
+  __REACT_HOT_LOADER__.register(unregister, "unregister", "/Users/miracle/Desktop/DevOps/M2.FTX/m2/m2-react/src/service-worker.js");
+}();
+
+;

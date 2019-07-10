@@ -90,7 +90,7 @@ export default class MyComponent extends React.Component {
  import React from 'react'
  import { createForm } from 'rc-form'
  import { Button } from 'antd-mobile'
- import { PickerItem } from 'm2-antd/mobile' /* 待发布(可用其他空间代替) */
+ import { PickerItem } from 'm2-antd/mobile' /* 待发布(可用其他组件代替) */
  import { initialFormComponent } from 'm2-react'
  import { district } from 'antd-mobile-demo-data'
 
@@ -112,6 +112,7 @@ export default class MyComponent extends React.Component {
     ) 
   }
  }
+ 
  export default createForm()(AppForm)
  
 ```

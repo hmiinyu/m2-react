@@ -3,9 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getParam = exports.getRouteQueryParam = exports.getRouteParam = exports.renderRoutes = exports.loadLayoutRoutesConfig = exports.loadRoutesConfig = void 0;
+exports.getParam = exports.getRouteQueryParam = exports.getRouteParam = exports.createHistory = exports.renderRoutes = exports.loadLayoutRoutesConfig = exports.loadRoutesConfig = void 0;
 
 var _react = _interopRequireDefault(require("react"));
+
+var _history = require("history");
 
 var _reactRouterDom = require("react-router-dom");
 
@@ -192,6 +194,21 @@ var renderRoutes = function renderRoutes(routesConfig, contextPath) {
 
 exports.renderRoutes = renderRoutes;
 
+var createHistory = function createHistory() {
+  var routeType = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'hash';
+  routeType = routeType.toLowerCase();
+
+  if (routeType === 'browser') {
+    return (0, _history.createBrowserHistory)();
+  } else if (routeType === 'memory') {
+    return (0, _history.createMemoryHistory)();
+  } else {
+    return (0, _history.createHashHistory)();
+  }
+};
+
+exports.createHistory = createHistory;
+
 var getRouteParam = function getRouteParam(name, props) {
   if (name && props && props.match) {
     return props.match.params[name];
@@ -230,6 +247,8 @@ var _temp = function () {
   __REACT_HOT_LOADER__.register(loadLayoutRoutesConfig, "loadLayoutRoutesConfig", "/Users/miracle/Desktop/DevOps/M2.FTX/m2/m2-react/src/react-route.js");
 
   __REACT_HOT_LOADER__.register(renderRoutes, "renderRoutes", "/Users/miracle/Desktop/DevOps/M2.FTX/m2/m2-react/src/react-route.js");
+
+  __REACT_HOT_LOADER__.register(createHistory, "createHistory", "/Users/miracle/Desktop/DevOps/M2.FTX/m2/m2-react/src/react-route.js");
 
   __REACT_HOT_LOADER__.register(getRouteParam, "getRouteParam", "/Users/miracle/Desktop/DevOps/M2.FTX/m2/m2-react/src/react-route.js");
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { createHashHistory, createBrowserHistory, createMemoryHistory } from 'history';
 import { HashRouter, BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { DataType, UrlUtil } from 'm2-core';
 
@@ -121,6 +122,17 @@ export const renderRoutes = (routesConfig, contextPath, configOptions = {}) => {
       <Switch>{children}</Switch>
     </BrowserRouter>
   );
+};
+
+export const createHistory = (routeType = 'hash') => {
+  routeType = routeType.toLowerCase();
+  if (routeType === 'browser') {
+    return createBrowserHistory();
+  } else if (routeType === 'memory'){
+    return createMemoryHistory();
+  } else {
+    return createHashHistory();
+  }
 };
 
 export const getRouteParam = (name, props) => {

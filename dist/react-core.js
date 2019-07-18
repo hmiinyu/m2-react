@@ -85,10 +85,10 @@ var getComponentRef = function getComponentRef(refKey, parent) {
 exports.getComponentRef = getComponentRef;
 
 var initialFormComponent = function initialFormComponent(component) {
-  var getFieldsValue = component.props.form.getFieldsValue;
   component.form = _objectSpread({}, component.props.form, {
+    values: {},
     setFieldValue: function setFieldValue(field, val) {
-      component.form.values = _objectSpread({}, getFieldsValue(), _defineProperty({}, field, val));
+      component.form.values = _objectSpread({}, component.form.values, _defineProperty({}, field, val));
     }
   });
 };

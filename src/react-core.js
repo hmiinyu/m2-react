@@ -61,8 +61,7 @@ export const getComponentRef = (refKey, parent) => {
  * @param {Object} component 当前表单组件
  */
 export const initialFormComponent = (component) => {
-  const { getFieldsValue } = component.props.form;
-  component.form = { ...component.props.form, setFieldValue: (field, val) => {
-      component.form.values = { ...getFieldsValue(), [field]: val }
+  component.form = { ...component.props.form, values: {}, setFieldValue: (field, val) => {
+      component.form.values = { ...component.form.values, [field]: val }
   }};
 };

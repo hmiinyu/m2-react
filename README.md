@@ -1,6 +1,6 @@
 # m2-react
 
-[![](https://img.shields.io/badge/m2--react-v1.1.3-green.svg)](https://github.com/hmiinyu/m2-react.git) <br/>
+[![](https://img.shields.io/badge/m2--react-v1.1.5-green.svg)](https://github.com/hmiinyu/m2-react.git) <br/>
 The package is provided facilities and utilities based on react.
 
 You can learning the M2 React & Redux architecture via visiting: 
@@ -184,6 +184,11 @@ export default {
 ```
 notes: the method is provided only for m2-redux to initialize Root component
 ```
+ - `createHistory` **function** Create the hash/browser/memory history base react-router with the param *routeType*(default: 'hash').
+ ####
+ | param | type | description | default | example |
+ | ------------ | ------------ | ------------ | ------------ | ------------ |
+ | routeType | string | the route type | 'hash' | |
  - `getRouteParam` **function** Get the router param value with the param *name*,*props*.
  ####
  | param | type | description | default | example |

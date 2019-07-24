@@ -10,8 +10,6 @@ var _react = _interopRequireDefault(require("react"));
 
 var _reactDom = require("react-dom");
 
-var _reactHotLoader = require("react-hot-loader");
-
 var _stringFormat = _interopRequireDefault(require("string-format"));
 
 var _m2Core = require("m2-core");
@@ -46,16 +44,10 @@ function render(rootApp) {
   }
 
   var _renderApp = function _renderApp(app) {
-    (0, _reactDom.render)(_react["default"].createElement(_reactHotLoader.AppContainer, null, app), document.getElementById(rootApp.root || 'root'));
+    (0, _reactDom.render)(app, document.getElementById(rootApp.root || 'root'));
   };
 
-  _renderApp(_app_root);
-
-  if (module.hot) {
-    module.hot.accept(function () {
-      _renderApp(_app_root);
-    });
-  } // If you want your app to work offline and load faster, you can change
+  _renderApp(_app_root); // If you want your app to work offline and load faster, you can change
   // unregister() to register() below. Note this comes with some pitfalls.
   // Learn more about service workers: http://bit.ly/CRA-PWA
 
@@ -94,18 +86,3 @@ var initialFormComponent = function initialFormComponent(component) {
 };
 
 exports.initialFormComponent = initialFormComponent;
-;
-
-var _temp = function () {
-  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-    return;
-  }
-
-  __REACT_HOT_LOADER__.register(render, "render", "/Users/miracle/Desktop/DevOps/M2.FTX/m2/m2-react/src/react-core.js");
-
-  __REACT_HOT_LOADER__.register(getComponentRef, "getComponentRef", "/Users/miracle/Desktop/DevOps/M2.FTX/m2/m2-react/src/react-core.js");
-
-  __REACT_HOT_LOADER__.register(initialFormComponent, "initialFormComponent", "/Users/miracle/Desktop/DevOps/M2.FTX/m2/m2-react/src/react-core.js");
-}();
-
-;

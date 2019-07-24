@@ -235,26 +235,3 @@ var getParam = function getParam(name, props) {
 };
 
 exports.getParam = getParam;
-;
-
-var _temp = function () {
-  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-    return;
-  }
-
-  __REACT_HOT_LOADER__.register(loadRoutesConfig, "loadRoutesConfig", "/Users/miracle/Desktop/DevOps/M2.FTX/m2/m2-react/src/react-route.js");
-
-  __REACT_HOT_LOADER__.register(loadLayoutRoutesConfig, "loadLayoutRoutesConfig", "/Users/miracle/Desktop/DevOps/M2.FTX/m2/m2-react/src/react-route.js");
-
-  __REACT_HOT_LOADER__.register(renderRoutes, "renderRoutes", "/Users/miracle/Desktop/DevOps/M2.FTX/m2/m2-react/src/react-route.js");
-
-  __REACT_HOT_LOADER__.register(createHistory, "createHistory", "/Users/miracle/Desktop/DevOps/M2.FTX/m2/m2-react/src/react-route.js");
-
-  __REACT_HOT_LOADER__.register(getRouteParam, "getRouteParam", "/Users/miracle/Desktop/DevOps/M2.FTX/m2/m2-react/src/react-route.js");
-
-  __REACT_HOT_LOADER__.register(getRouteQueryParam, "getRouteQueryParam", "/Users/miracle/Desktop/DevOps/M2.FTX/m2/m2-react/src/react-route.js");
-
-  __REACT_HOT_LOADER__.register(getParam, "getParam", "/Users/miracle/Desktop/DevOps/M2.FTX/m2/m2-react/src/react-route.js");
-}();
-
-;
